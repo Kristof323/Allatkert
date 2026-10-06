@@ -6,32 +6,108 @@ namespace Program
 {
     public class Allat
     {
+        private string nev = "NÉVTELEN";
+        private int kor;
+        private int testsuly;
+        private int egeszseg;
 
-        private string nev;
         public string Nev
         {
-            get { if (nev == null || nev == "") return "NÉVTELEN"; else return nev; }
-            set { nev = value; }
+            get
+            {
+                return nev;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    nev = "NÉVTELEN";
+                }
+                else
+                {
+                    nev = value;
+                }
+            }
         }
-        private int kor;
-        public int Kor { 
-            get { return kor; }
-            set { if (value < 0) kor = 0; else if (value > 80) kor = 80; else kor = value; }
+
+        public int Kor
+        {
+            get
+            {
+                return kor;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    kor = 0;
+                }
+                else if (value > 80)
+                {
+                    kor = 80;
+                }
+                else
+                {
+                    kor = value;
+                }
+            }
         }
-        private int testsuly;
-        public int Testsuly { 
-            get { return testsuly; }
-            set { if (value < 0) testsuly = 0; else testsuly = value; }
+
+        public int Testsuly
+        {
+            get
+            {
+                return testsuly;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    testsuly = 0;
+                }
+                else
+                {
+                    testsuly = value;
+                }
+            }
         }
-        private int egeszseg;       
-        public int Egeszseg {
-            get { return egeszseg; }
-            set { if (value < 0) egeszseg = 0; else if (value > 100) egeszseg = 100; else egeszseg = value; }
+
+        public int Egeszseg
+        {
+            get
+            {
+                return egeszseg;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    egeszseg = 0;
+                }
+                else if (value > 100)
+                {
+                    egeszseg = 100;
+                }
+                else
+                {
+                    egeszseg = value;
+                }
+            }
         }
-        private bool gondozasSzukseges;
-        public bool GondozasSzukseges { 
-            get { return gondozasSzukseges; }
-            set { gondozasSzukseges = value; }
+
+        public bool GondozasSzukseges
+        {
+            get
+            {
+                return Egeszseg <= 50;
+            }
+            set
+            {
+                if (egeszseg <= 50)
+                {
+                    value=true;
+                }
+            }
         }
 
         public Allat(string nev, int kor, int testsuly, int egeszseg)
@@ -40,41 +116,30 @@ namespace Program
             Kor = kor;
             Testsuly = testsuly;
             Egeszseg = egeszseg;
-            GondozasSzukseges = false;
         }
 
-        public void InformaciotAd()
+        public virtual void InformaciotAd()
         {
-            Console.WriteLine($"{Nev}-{Kor} éves állat,{Testsuly} kg súllyal.");
+            Console.WriteLine(
+                $"{Nev} - {Kor} éves állat, {Testsuly} kg súllyal"
+            );
         }
 
-
-
-        public void Gondoz(int ido)
+        public virtual void Gondoz(int ido)
         {
             if (ido > 30)
             {
-                testsuly += 2;
-                egeszseg += 15;
-                if (egeszseg < 35)
-                {
-                    egeszseg = 50;
-                }
-                else
-                {
-                    egeszseg += 15;
-                };
-                Console.WriteLine("Az állat gondozása megtörtént.");
-
-
-
-
-
-
-
-
+                Testsuly += 2;
             }
-        }
 
+            Egeszseg += 15;
+
+            if (Egeszseg < 50)
+            {
+                Egeszseg = 50;
+            }
+
+            Console.WriteLine($"{Nev} gondozása megtörtént.");
+        }
     }
 }
